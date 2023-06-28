@@ -30,12 +30,7 @@ public class userServiceImpl implements userService {
 
     public void  deleteUserById(Long id) {
          userRepository.deleteById(id);
-}
-
-    public boolean existsByEmail(String email) {
-        // Use the UserRepository to check if a user with the given email exists
-        return userRepository.existsByEmail(email);
     }
 
-
+ 
 }
