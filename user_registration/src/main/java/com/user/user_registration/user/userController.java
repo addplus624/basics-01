@@ -1,9 +1,7 @@
 package com.user.user_registration.user;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -13,6 +11,7 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class userController {
 
+    @Autowired
     private final userService user_Service;
 
     @Autowired
@@ -22,17 +21,12 @@ public class userController {
 
     @PostMapping("/createUser")
     public ResponseEntity<String> createUser(@RequestBody userModel user) {
-        
-        if(user_Service.existsByEmail(user.getEmail())) {
-            System.out.print("email already exists");
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
-        }
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        // Encode the password
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         user_Service.saveUser(user);
-        return ResponseEntity.ok("user created successfully");
+        return ResponseEntity.ok("user registration successfully");
     }
     
     @DeleteMapping("/deleteUser/{id}")

@@ -6,5 +6,4 @@ public interface userService {
     Iterable<userModel> getAllUsers();
     Optional<userModel> findUserById(Long id);
     void deleteUserById(Long id);
-    boolean existsByEmail(String email);
 }
